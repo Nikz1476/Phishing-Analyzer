@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!--
+    Why this CSP exists: it is the technical proof behind our privacy promise.
+    default-src 'none' denies everything by default; we then allow only the
+    exact things a static, offline app needs. connect-src 'none' is the line
+    that makes "nothing is ever uploaded" a verifiable fact, not a claim.
+  -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; connect-src 'none'; base-uri 'none'; form-action 'none'" />
+  <meta name="referrer" content="no-referrer" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Phishing Email Analyser</title>
+  <link rel="stylesheet" href="/src/ui/styles/main.css" />
+</head>
+<body>
+  <div id="app"></div>
+  <script type="module" src="/src/ui/main.ts"></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+# .clinerules — Phishing Email Analyser
+
+This file summarises the non-negotiable rules for anyone (human or AI) working
+in this repo. Full detail lives in the original project brief; this is the
+quick-reference so nothing drifts silently over time.
+
+## Working agreement
+- Explain every important decision in plain English before implementing it.
+  Record it in docs/decisions/NNN-title.md (Context, Options, Decision,
+  Trade-off), under 250 words.
+- Work phase by phase (see project Section 15). Stop at the end of each
+  phase, summarise, wait for approval before continuing.
+- Never add a dependency without asking first. State: what it does, why not
+  write it ourselves, its size, licence, maintenance status.
+- Prefer boring, readable code over clever code. Comment the WHY of a rule,
+  not the WHAT.
+- LEARNER-OWNED modules (message/header parser, URL analyser, scoring
+  engine): in scaffold mode, deliver only interfaces + design notes +
+  documented edge cases + a failing test suite. Do not implement the logic.
+  Wait for the human's implementation, then review critically.
+
+## Hard constraints (privacy)
+- All analysis runs in the browser. Email content is never sent anywhere.
+- No analytics, telemetry, error reporting, remote fonts, CDNs, remote
+  images, or external scripts. Self-host everything.
+- No localStorage/sessionStorage/IndexedDB/cookies for email content. Only a
+  theme preference may persist. Provide a "Clear" button.
+- Never put input into the URL (query or fragment).
+- No service worker in v1.
+
+## Hard constraints (app security)
+- Never use innerHTML with user-derived content. Use textContent / DOM node
+  creation. Parse pasted HTML only via DOMParser into an inert document.
+- Never render an extracted URL as a clickable link. Always plain text, with
+  a "copy defanged" option.
+- CSP via <meta> + a _headers file (frame-ancestors only works as a header).
+
+## Technology
+- TypeScript + Vite + Vitest + Playwright (dev only) + ESLint.
+- Zero shipped runtime dependencies, with two possible exceptions decided via
+  decision records: jsQR (QR decode) and tldts (public suffix list).
+- Plain CSS only. No React, no backend, no database, no API keys.
+- src/core/* is pure functions, no DOM access, testable in Node.

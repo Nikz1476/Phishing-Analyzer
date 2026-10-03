@@ -1,0 +1,7 @@
+# Served by hosts that support custom headers (Cloudflare Pages, Netlify).
+# frame-ancestors only works as a real HTTP header, never inside a <meta> tag,
+# which is why it lives here and NOT in index.html's CSP meta tag.
+/*
+  Content-Security-Policy: default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; connect-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: no-referrer

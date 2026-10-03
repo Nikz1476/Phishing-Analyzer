@@ -1,0 +1,14 @@
+node_modules/
+dist/
+coverage/
+playwright-report/
+test-results/
+*.log
+.DS_Store
+
+# Real-world email corpora used for eval/calibration must never be committed:
+# they contain real third-party addresses and sometimes malware samples.
+eval/data/phishing/*
+eval/data/legit/*
+!eval/data/phishing/.gitkeep
+!eval/data/legit/.gitkeep
