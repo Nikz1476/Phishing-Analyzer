@@ -1,0 +1,121 @@
+{
+  "version": "1.0.0",
+  "rules": [
+    {
+      "id": "LANG-URGENCY",
+      "category": "language",
+      "weight": 6,
+      "title": "Urgency or artificial deadline",
+      "why": "Attackers manufacture time pressure so victims act before thinking. Legitimate organisations rarely impose same-day deadlines in email.",
+      "advice": "Slow down. Verify the claim through the organisation's official website or app, not through the message.",
+      "mitre": ["T1566"],
+      "confidence": "medium",
+      "patterns": [
+        { "type": "anyOf", "values": ["within 24 hours", "within 48 hours", "within 12 hours", "within two hours", "within 2 hours", "within one hour", "expires today", "expire today", "expires in", "expiring soon"] },
+        { "type": "anyOf", "values": ["immediately", "immediate action", "act now", "act today", "action required", "action needed", "urgent action", "urgent attention", "urgently"] },
+        { "type": "anyOf", "values": ["final notice", "final warning", "last warning", "last chance", "final reminder", "second reminder", "third and final"] },
+        { "type": "anyOf", "values": ["time sensitive", "time-sensitive", "as soon as possible", "asap", "right away", "without delay", "at the earliest", "at once"] },
+        { "type": "anyOf", "values": ["today only", "before midnight", "before the end of the day", "before 5 pm", "by end of day", "eod", "close of business"] },
+        { "type": "anyOf", "values": ["limited time", "offer expires", "respond now", "reply now", "click now", "verify now", "update now", "confirm now"] }
+      ],
+      "negations": ["no rush", "not urgent", "no immediate action"],
+      "examples": ["Your account will be suspended within 24 hours unless you verify.", "FINAL NOTICE: act now to avoid closure."],
+      "falsePositives": ["Transactional alerts such as 'your OTP expires in 10 minutes' are legitimate but may match."]
+    },
+    {
+      "id": "LANG-THREAT",
+      "category": "language",
+      "weight": 10,
+      "title": "Threat of account closure, suspension or legal action",
+      "why": "Threatening loss of access, money or legal consequences is the standard lever for panic. Real providers usually warn before suspending, and never by surprise email alone.",
+      "advice": "Do not act from the message. Log in through the official app or website to check the real status of your account.",
+      "mitre": ["T1566"],
+      "confidence": "medium",
+      "patterns": [
+        { "type": "anyOf", "values": ["account will be suspended", "account will be closed", "account will be blocked", "account will be terminated", "account will be deactivated", "account has been suspended", "account has been locked", "account has been locked", "account will be locked"] },
+        { "type": "anyOf", "values": ["permanently disabled", "permanently deleted", "permanently closed", "will be deleted", "will be removed", "will be terminated"] },
+        { "type": "anyOf", "values": ["legal action", "legal proceedings", "court notice", "court case", "summons", "arrest warrant", "legal notice", "non-bailable", "fir has been"] },
+        { "type": "anyOf", "values": ["penalty", "fine of", "late fee", "penalty charges", "will be charged", "additional charges", "recovery proceedings"] },
+        { "type": "anyOf", "values": ["failure to comply", "if you do not respond", "if we do not hear from you", "otherwise your", "avoid suspension", "avoid termination", "prevent closure"] },
+        { "type": "anyOf", "values": ["unauthorised login", "suspicious activity", "security breach", "your data will be", "you will lose access", "loss of access"] }
+      ],
+      "negations": ["no action is required", "no action needed"],
+      "examples": ["Your account will be blocked today", "Failure to comply will result in legal action."],
+      "falsePositives": ["Dunning / collections emails from real vendors contain this language; weigh alongside sender authentication."]
+    },
+    {
+      "id": "LANG-SECRECY",
+      "category": "language",
+      "weight": 8,
+      "title": "Request for secrecy or an unusual communication channel",
+      "why": "Asking the recipient to keep things quiet, or to move to a personal address/phone, is a hallmark of business email compromise. Legitimate business does not require secrecy from colleagues.",
+      "advice": "Treat any request for confidentiality about money or credentials as a red flag; confirm in person or on a known number.",
+      "mitre": ["T1656"],
+      "confidence": "medium",
+      "patterns": [
+        { "type": "anyOf", "values": ["don't tell anyone", "do not tell anyone", "keep this confidential", "keep it confidential", "keep this between us", "between you and me", "strictly confidential", "do not discuss", "don't discuss"] },
+        { "type": "anyOf", "values": ["only reply by email", "reply only by email", "only by email", "do not call", "don't call me", "do not phone", "can't talk", "cannot talk", "in a meeting", "i'm in a meeting", "i am in a meeting", "out of the office"] },
+        { "type": "anyOf", "values": ["i'm travelling", "i am travelling", "from my personal email", "personal email address", "private email", "temporary email", "new number", "reach me on whatsapp", "whatsapp me"] },
+        { "type": "anyOf", "values": ["off the record", "do not forward", "don't forward", "delete this", "purely confidential", "discreet", "handle quietly"] }
+      ],
+      "negations": [],
+      "examples": ["Please don't tell anyone about this yet, I'm in a meeting - only reply by email."],
+      "falsePositives": ["HR/legal matters sometimes legitimately require confidentiality; check the sender out of band."]
+    },
+    {
+      "id": "LANG-REWARD",
+      "category": "language",
+      "weight": 8,
+      "title": "Unexpected reward, refund or winnings",
+      "why": "Offers of unexpected money are a classic hook because they create excitement and lower scrutiny. Legitimate schemes do not arrive as surprise emails requesting details.",
+      "advice": "If you did not enter something, you did not win it. Do not pay any 'processing fee' or hand over bank details.",
+      "mitre": ["T1566"],
+      "confidence": "high",
+      "patterns": [
+        { "type": "anyOf", "values": ["you have won", "you've won", "winner", "won the lottery", "lucky winner", "you are a winner", "congratulations you won"] },
+        { "type": "anyOf", "values": ["unclaimed funds", "unclaimed money", "claim your", "claim now", "claim your prize", "claim your reward", "claim your refund"] },
+        { "type": "anyOf", "values": ["refund is pending", "pending refund", "tax refund", "itr refund", "you are eligible for a refund", "eligible to receive", "refund of"] },
+        { "type": "anyOf", "values": ["processing fee", "claim fee", "release fee", "clearance fee", "small fee to release", "administrative fee"] },
+        { "type": "anyOf", "values": ["prize money", "cash prize", "gift voucher", "free gift", "survey reward", "compensation fund", "beneficiary"] }
+      ],
+      "negations": [],
+      "examples": ["You have won Rs. 25,00,000 in the lucky draw - claim now!"],
+      "falsePositives": ["Retail loyalty offers and genuine refund notifications; check sender and existing orders."]
+    },
+    {
+      "id": "LANG-GENERIC",
+      "category": "language",
+      "weight": 3,
+      "title": "Generic, non-personalised greeting",
+      "why": "A provider you actually use usually knows your name. 'Dear Customer' suggests a bulk mailing that does not know who you are.",
+      "advice": "A weak signal on its own, but combined with others it supports the phishing read.",
+      "mitre": ["T1566"],
+      "confidence": "low",
+      "patterns": [
+        { "type": "anyOf", "values": ["dear customer", "dear user", "dear account holder", "dear valued customer", "dear client", "dear sir/madam", "dear sir or madam", "dear member", "dear email user", "dear taxpayer", "dear beneficiary", "valued customer", "dear resident", "dear subscriber", "dear recipient"] }
+      ],
+      "negations": [],
+      "examples": ["Dear Customer, we have noticed unusual activity..."],
+      "falsePositives": ["Many legitimate bulk mailings use generic greetings."]
+    },
+    {
+      "id": "LANG-SECALERT",
+      "category": "language",
+      "weight": 6,
+      "title": "Fake security alert",
+      "why": "Claiming an unusual sign-in, unauthorised access or a security issue is a common pretext to get you to click a 'verify' or 'secure account' link.",
+      "advice": "Check sign-in activity from the official app/site directly. Do not use the link in the email.",
+      "mitre": ["T1598"],
+      "confidence": "medium",
+      "patterns": [
+        { "type": "anyOf", "values": ["unusual sign-in", "unusual signin", "unusual login", "unusual activity", "suspicious sign-in", "suspicious login", "unrecognised device", "unrecognized device", "new sign-in", "new login", "we noticed a login", "we detected a sign-in"] },
+        { "type": "anyOf", "values": ["unauthorised access", "unauthorized access", "unauthorised login", "someone may have accessed", "we blocked an attempt", "compromised account", "your account may be at risk", "account takeover"] },
+        { "type": "anyOf", "values": ["security alert", "security warning", "security notice", "important security", "protect your account", "secure your account", "review account activity", "confirm your identity", "verify your identity", "validate your identity"] },
+        { "type": "anyOf", "values": ["password was changed", "password has changed", "email address was changed", "recovery email changed", "two-factor authentication disabled", "2fa disabled", "we suspect"] }
+      ],
+      "negations": ["if this was you", "if you did this", "if this wasn't you", "if you did not"],
+      "examples": ["We detected an unusual sign-in to your account. Verify your identity now."],
+      "falsePositives": ["Real security alerts exist; a genuine one tells you to open the app rather than click a link."]
+    }
+  ]
+}

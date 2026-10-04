@@ -1,0 +1,115 @@
+{
+  "version": "1.0.0",
+  "rules": [
+    {
+      "id": "TECH-CLICKFIX",
+      "category": "technique",
+      "weight": 35,
+      "title": "Instructions to run a command or paste into a terminal (ClickFix)",
+      "why": "Modern Fake-CAPTCHA / ClickFix attacks convince you to paste a command into Run or a terminal, which downloads malware with no attachment and no obvious link. No legitimate workflow asks you to paste commands from an email.",
+      "advice": "Never paste commands from an email into Run, PowerShell, Terminal or a browser console. This is malware delivery.",
+      "mitre": ["T1204.004"],
+      "confidence": "high",
+      "patterns": [
+        { "type": "anyOf", "values": ["press win + r", "press win+r", "open the run dialog", "open run dialog", "press windows key and r", "launch run", "in the run box", "paste it into run", "paste in the run"] },
+        { "type": "anyOf", "values": ["press ctrl + v", "press ctrl+v", "ctrl + shift + v", "paste the command", "paste this command", "copy and paste the command", "paste the code below", "copy the command below"] },
+        { "type": "anyOf", "values": ["open powershell", "open terminal", "open command prompt", "open cmd", "open the terminal", "launch terminal", "open windows terminal", "open the console", "open developer console"] },
+        { "type": "anyOf", "values": ["verify you are human", "i'm not a robot", "im not a robot", "complete the captcha", "solve the captcha", "prove you are human", "to continue please verify", "click to verify you are human"] },
+        { "type": "regex", "value": "(?:powershell|pwsh)\\s+(?:-[a-z]*e[a-z]*c[a-z]*\\b|-enc\\b|-encodedcommand\\b|iex\\b|invoke-expression)", "flags": "i" },
+        { "type": "regex", "value": "(?:mshta|rundll32|regsvr32|wscript|cscript|certutil|bitsadmin)\\s", "flags": "i" },
+        { "type": "regex", "value": "(?:curl|wget)\\s+[^\\n]{0,80}\\|\\s*(?:ba)?sh\\b", "flags": "i" },
+        { "type": "regex", "value": "(?:cmd(?:\\.exe)?\\s*/c\\b|start-process\\s)", "flags": "i" },
+        { "type": "anyOf", "values": ["paste into your browser", "paste into the address bar", "open the address bar and paste", "paste in the console", "run the following command", "execute the following command", "run this command"] }
+      ],
+      "negations": ["never paste", "do not paste", "never run commands from an email", "we will never ask you to run"],
+      "examples": ["To verify you are human, press Win+R, paste the command below and hit Enter."],
+      "falsePositives": ["Legitimate developer docs mention PowerShell; this rule targets instructions aimed at a non-technical recipient."]
+    },
+    {
+      "id": "TECH-REMOTE-ACCESS",
+      "category": "technique",
+      "weight": 25,
+      "title": "Request to install remote-support software",
+      "why": "Telling a victim to install AnyDesk, TeamViewer or a 'remote session' tool is the standard step in tech-support and refund scams: once connected, the attacker drives the victim's machine.",
+      "advice": "Never install remote-access tools on the instruction of an unsolicited contact. Hang up and call the company using a number you look up yourself.",
+      "mitre": ["T1219"],
+      "confidence": "high",
+      "patterns": [
+        { "type": "anyOf", "values": ["anydesk", "teamviewer", "team viewer", "logmein", "gotomypc", "screenconnect", "connectwise", "supremo", "ammyy", "remote utilities", "quick assist", "windows quick assist", "zoho assist", "chrome remote desktop"] },
+        { "type": "anyOf", "values": ["remote session", "remote support", "allow remote access", "give me remote access", "share your screen", "screen sharing session", "start a remote session", "download the remote tool", "install our support tool"] },
+        { "type": "anyOf", "values": ["read out the number on the screen", "tell me the 9-digit", "tell me the id shown", "share the id and password shown", "enter the session code"] }
+      ],
+      "negations": ["never install remote access", "do not install any remote"],
+      "examples": ["Please install AnyDesk so our technician can fix your computer."],
+      "falsePositives": ["Genuine IT departments sometimes use Quick Assist but announce it through known channels."]
+    },
+    {
+      "id": "TECH-QR-LURE",
+      "category": "technique",
+      "weight": 10,
+      "title": "QR-code lure",
+      "why": "Moving the payload into a QR code defeats link scanners and hides the destination from the reader. This is 'quishing'.",
+      "advice": "Do not scan QR codes from email. Type the official address yourself instead.",
+      "mitre": ["T1566.002"],
+      "confidence": "medium",
+      "patterns": [
+        { "type": "anyOf", "values": ["scan the qr", "scan this qr", "scan the qr code", "scan the code below", "scan the code above", "scan to verify", "scan to pay", "scan to restore", "scan to restore access", "scan the barcode"] },
+        { "type": "anyOf", "values": ["qr code to verify", "qr code below", "qr code attached", "use your phone camera", "open your camera app", "using the qr code", "you will need to scan"] }
+      ],
+      "negations": [],
+      "examples": ["Scan the QR code to verify your account and restore access."],
+      "falsePositives": ["Event tickets and menus use QR codes legitimately; the risk rises with verify/pay/restore wording."]
+    },
+    {
+      "id": "ATT-MACRO-LANG",
+      "category": "attachment",
+      "weight": 25,
+      "title": "Instruction to enable macros or content",
+      "why": "Asking you to 'enable content' or 'enable editing' defeats the protection that stops document macros from running, which is the classic malware delivery path.",
+      "advice": "Never enable macros. If you need the document, ask the sender to send a PDF or a plain document.",
+      "mitre": ["T1204.002"],
+      "confidence": "high",
+      "patterns": [
+        { "type": "anyOf", "values": ["enable macros", "enable the macros", "enable content", "enable editing", "enable editing and content", "click enable content", "click enable editing", "you must enable", "turn on macros", "allow macros"] },
+        { "type": "anyOf", "values": ["the document is protected", "protected view", "click enable to view", "enable to view the content", "to view this document enable", "unlock the document", "if the document does not open", "if you cannot see the content"] }
+      ],
+      "negations": ["never enable macros", "do not enable macros"],
+      "examples": ["If the invoice does not display, click Enable Editing then Enable Content."],
+      "falsePositives": ["Corporate templates sometimes mention protected view; combined with an Office attachment it is meaningful."]
+    },
+    {
+      "id": "ATT-ARCHIVE-PASSWORD",
+      "category": "attachment",
+      "weight": 15,
+      "title": "Password for an attached archive is given in the body",
+      "why": "Password-protected archives (often containing malware) are sent with the password in the email so that antivirus scanners cannot open them.",
+      "advice": "Do not open password-protected archives from email. This is a deliberate attempt to defeat security scanning.",
+      "mitre": ["T1027"],
+      "confidence": "medium",
+      "requiresAny": ["has-attachment"],
+      "patterns": [
+        { "type": "anyOf", "values": ["password for the archive", "password of the archive", "archive password", "zip password", "rar password", "the password is", "use the password", "extract using password", "unzip with password", "protected with password", "password protected attachment"] },
+        { "type": "proximity", "a": ["password"], "b": ["zip", "rar", "7z", "archive", "attachment", "attached file", "encrypted file"], "distance": 6 }
+      ],
+      "negations": [],
+      "examples": ["Attached is the scanned invoice. The password is 12345 to open the ZIP."],
+      "falsePositives": ["Some businesses legitimately send password-protected scans; still worth scrutiny because it defeats AV."]
+    },
+    {
+      "id": "TECH-THREAD-HIJACK-LIKE",
+      "category": "technique",
+      "weight": 4,
+      "title": "Reply/forward subject with no quoted conversation",
+      "why": "Attackers fake 'RE:' or 'FW:' to make a fresh email look like part of an existing thread, but often fail to include the quoted history a real reply would have.",
+      "advice": "A weak signal on its own. Check whether you actually had this conversation.",
+      "mitre": ["T1566"],
+      "confidence": "low",
+      "patterns": [
+        { "type": "regex", "value": "^(?:re|fwd|fw|aw|sv)\\s*(?:\\[\\d+\\])?\\s*:", "flags": "i" }
+      ],
+      "negations": [],
+      "examples": ["Subject: RE: Invoice payment - but the body has no quoted earlier mail."],
+      "falsePositives": ["Any genuine reply starts with RE:; this only fires when no quoted history is present (handled in code)."]
+    }
+  ]
+}

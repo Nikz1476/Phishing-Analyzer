@@ -1,0 +1,10 @@
+{
+  "_comment": "TLDs with historically high abuse rates or that are frequently used as free/low-cost registrations in phishing. This is a WEAK signal (weight 5) because legitimate businesses and individuals do use these; it must never be the sole reason for a High Risk verdict.",
+  "tlds": [
+    "zip", "mov", "tk", "ml", "ga", "cf", "gq", "top", "xyz", "icu", "cyou",
+    "cfd", "sbs", "bond", "rest", "monster", "quest", "bar", "click", "link",
+    "loan", "download", "stream", "work", "men", "party", "review", "country",
+    "kim", "science", "gdn", "bid", "date", "faith", "racing", "win", "wang",
+    "ren", "wang", "cc", "pw", "su", "ws", "buzz", "lol", "best", "live", "vip", "shop", "online", "site", "store"
+  ]
+}

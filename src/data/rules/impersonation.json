@@ -1,0 +1,63 @@
+{
+  "version": "1.0.0",
+  "rules": [
+    {
+      "id": "IMP-GOV-SCAM",
+      "category": "impersonation",
+      "weight": 10,
+      "title": "Government or regulatory impersonation",
+      "why": "Tax, KYC, customs and utility scams impersonate authorities because people comply with official-sounding demands, especially under a deadline.",
+      "advice": "Government bodies do not collect fees or IDs by email link. Check on the official government portal by typing its address yourself.",
+      "mitre": ["T1656"],
+      "confidence": "medium",
+      "patterns": [
+        { "type": "anyOf", "values": ["income tax department", "income tax refund", "itr filing", "pan aadhaar link", "pan-aadhaar link", "link your pan", "link your aadhaar", "aadhaar update", "aadhaar kyc"] },
+        { "type": "anyOf", "values": ["customs duty", "custom clearance", "parcel held at customs", "seized by customs", "clearance charge", "customs fee", "detained at customs"] },
+        { "type": "anyOf", "values": ["court notice", "legal notice", "summons issued", "traffic challan", "challan payment", "e-challan", "fir registered", "police complaint"] },
+        { "type": "anyOf", "values": ["electricity disconnection", "power will be disconnected", "electricity bill overdue", "disconnection notice", "gas connection suspended", "water bill overdue", "municipal dues"] },
+        { "type": "anyOf", "values": ["epfo", "pf claim", "provident fund", "esic", "gst refund", "gst notice", "gst filing", "tds refund", "pm kisan", "pmjay", "ration card", "subsidy will be"] }
+      ],
+      "negations": [],
+      "examples": ["Your Aadhaar will be deactivated unless you link your PAN - pay the update fee here."],
+      "falsePositives": ["Genuine government notifications exist; they point to a portal you can reach by typing its official address."]
+    },
+    {
+      "id": "IMP-ITHELPDESK",
+      "category": "impersonation",
+      "weight": 8,
+      "title": "IT helpdesk impersonation",
+      "why": "Impersonating IT support ('mailbox full', 'password expires today') is a common way to get staff to hand over credentials over email or phone.",
+      "advice": "IT never asks for your password. Verify with your IT team through a channel you already use.",
+      "mitre": ["T1656"],
+      "confidence": "medium",
+      "patterns": [
+        { "type": "anyOf", "values": ["mailbox is full", "mailbox full", "mailbox storage", "email storage full", "quota exceeded", "your mailbox has exceeded", "storage limit reached", "inbox is full"] },
+        { "type": "anyOf", "values": ["password expires today", "password will expire", "password expiring", "your password has expired", "password expiration", "reset it immediately", "change your password to avoid"] },
+        { "type": "anyOf", "values": ["system administrator", "system admin", "it department", "it support", "it helpdesk", "help desk", "service desk", "technical support team", "network administrator", "mail administrator"] },
+        { "type": "anyOf", "values": ["webmail upgrade", "mail server upgrade", "upgrade to the new", "re-validate your mailbox", "revalidate your mailbox", "click here to upgrade", "mailbox verification", "validate your mailbox"] }
+      ],
+      "negations": [],
+      "examples": ["Your mailbox storage is full. Click here to upgrade and avoid losing emails."],
+      "falsePositives": ["Real IT notices exist but never ask for credentials; combine with sender and link analysis."]
+    },
+    {
+      "id": "IMP-EXEC-BEC",
+      "category": "impersonation",
+      "weight": 10,
+      "title": "Executive or authority impersonation (BEC)",
+      "why": "A short, vague request that appears to come from a senior person exploits hierarchy - staff act first and question later.",
+      "advice": "Verify identity by calling the person on a number you already know. Do not act on money or data requests from email alone.",
+      "mitre": ["T1656"],
+      "confidence": "medium",
+      "patterns": [
+        { "type": "anyOf", "values": ["are you available", "are you at your desk", "are you free", "do you have a moment", "are you in the office", "quick question", "quick task", "small task", "need a favour", "need a favor", "can you help me with something", "i need you to do something"] },
+        { "type": "anyOf", "values": ["on behalf of the ceo", "from the desk of", "as instructed by", "the chairman has asked", "the md has asked", "the director has asked", "finance director", "chief financial officer", "cfo has asked", "ceo has asked"] },
+        { "type": "anyOf", "values": ["this is confidential between us", "keep it confidential", "do not discuss with", "handle this personally", "personally handle", "urgent wire", "i am in a meeting so"] },
+        { "type": "anyOf", "values": ["process this payment", "make the payment", "handle the payment", "sort out the payment", "arrange the transfer", "send the funds", "before i go into a meeting"] }
+      ],
+      "negations": [],
+      "examples": ["Hi, are you at your desk? I need you to handle a confidential payment, I'm in a meeting."],
+      "falsePositives": ["Genuine short notes from executives exist; the tell is a money/data request combined with secrecy and phone avoidance."]
+    }
+  ]
+}

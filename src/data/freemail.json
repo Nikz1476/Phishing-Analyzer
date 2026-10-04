@@ -1,0 +1,12 @@
+{
+  "_comment": "Consumer/free webmail providers. A corporate-sounding From display name paired with one of these is a red flag (HDR-REPLYTO-FREEMAIL / HDR-DISPLAY-SPOOF).",
+  "domains": [
+    "gmail.com", "googlemail.com", "outlook.com", "outlook.in", "hotmail.com", "hotmail.co.uk",
+    "live.com", "live.in", "msn.com", "yahoo.com", "yahoo.co.uk", "yahoo.co.in", "yahoo.fr",
+    "ymail.com", "rocketmail.com", "proton.me", "protonmail.com", "pm.me", "aol.com",
+    "gmx.com", "gmx.de", "gmx.net", "mail.com", "mail.ru", "inbox.ru", "list.ru", "bk.ru",
+    "yandex.com", "yandex.ru", "ya.ru", "zoho.com", "zohomail.com", "icloud.com", "me.com",
+    "mac.com", "tutanota.com", "tuta.io", "fastmail.com", "hushmail.com", "rediffmail.com",
+    "163.com", "126.com", "qq.com", "sina.com", "naver.com", "daum.net", "hanmail.net"
+  ]
+}

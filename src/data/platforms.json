@@ -1,0 +1,16 @@
+{
+  "_comment": "Trusted multi-tenant hosting platforms. A phishing page hosted here is common because the parent domain carries a good reputation; URL-PLATFORM-ABUSE is therefore contextual - it only fires when the message ALSO has credential or brand-impersonation findings, and alone contributes nothing.",
+  "domains": [
+    "forms.office.com", "forms.office365.com",
+    "sites.google.com", "docs.google.com", "drive.google.com", "script.google.com",
+    "github.io", "pages.dev", "workers.dev", "web.app", "firebaseapp.com",
+    "blob.core.windows.net", "azurewebsites.net", "sharepoint.com",
+    "notion.site", "notion.so",
+    "sites.google.com", "glitch.me", "repl.co", "vercel.app", "netlify.app",
+    "surge.sh", "onrender.com", "webflow.io", "wixsite.com", "weebly.com",
+    "blogspot.com", "wordpress.com", "s3.amazonaws.com", "cloudfront.net",
+    "canva.com", "typeform.com", "jotform.com", "square.site", "linktr.ee",
+    "myshopify.com", "godaddysites.com", "weeblysite.com", "zoho.com",
+    "bitbucket.io", "gitlab.io", "readthedocs.io", "heropage.co", "users.github.com"
+  ]
+}

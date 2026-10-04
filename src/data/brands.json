@@ -1,0 +1,128 @@
+{
+  "_comment": "Brands used for typosquat/combosquat/homoglyph detection. legitDomains are NEVER flagged by any brand rule (there is a parametrised test asserting this). aliases are matched in text/subjects/display-names for IMP-BRAND-MISMATCH. labels are the ASCII skeleton strings checked against registrable labels.",
+  "microsoft": {
+    "aliases": ["microsoft", "office 365", "o365", "microsoft 365", "outlook", "onedrive", "sharepoint", "teams", "ms office"],
+    "legitDomains": ["microsoft.com", "microsoftonline.com", "office.com", "live.com", "outlook.com", "sharepoint.com", "office365.com", "microsoft365.com", "windows.net", "azure.com", "msn.com", "passport.com", "hotmail.com"],
+    "labels": ["microsoft", "microsoftonline", "office", "outlook", "sharepoint", "onedrive", "o365"]
+  },
+  "google": {
+    "aliases": ["google", "gmail", "gsuite", "google workspace", "google drive", "youtube"],
+    "legitDomains": ["google.com", "gmail.com", "googlemail.com", "youtube.com", "googleusercontent.com", "google.co.uk", "google.co.in", "googleapis.com", "withgoogle.com"],
+    "labels": ["google", "gmail", "youtube", "gsuite"]
+  },
+  "apple": {
+    "aliases": ["apple", "icloud", "apple id", "itunes", "app store"],
+    "legitDomains": ["apple.com", "icloud.com", "me.com", "mac.com", "itunes.com", "apple.co", "appleid.apple.com"],
+    "labels": ["apple", "icloud", "itunes"]
+  },
+  "amazon": {
+    "aliases": ["amazon", "aws", "prime video", "amazon pay"],
+    "legitDomains": ["amazon.com", "amazon.co.uk", "amazon.in", "amazon.de", "amazon.ca", "amazon.com.au", "amazon.fr", "amazon.it", "amazon.es", "amazon.co.jp", "aws.amazon.com", "primevideo.com", "amazonpay.com", "a2z.com"],
+    "labels": ["amazon", "amazonpay", "primevideo"]
+  },
+  "paypal": {
+    "aliases": ["paypal", "pay pal"],
+    "legitDomains": ["paypal.com", "paypal.me", "paypal.co.uk", "paypalobjects.com", "paypal-community.com"],
+    "labels": ["paypal", "paypalobjects"]
+  },
+  "meta": {
+    "aliases": ["facebook", "meta", "instagram", "whatsapp", "messenger"],
+    "legitDomains": ["facebook.com", "fb.com", "meta.com", "instagram.com", "whatsapp.com", "messenger.com", "fbcdn.net", "facebookmail.com"],
+    "labels": ["facebook", "instagram", "whatsapp", "messenger", "meta"]
+  },
+  "linkedin": {
+    "aliases": ["linkedin", "linked in"],
+    "legitDomains": ["linkedin.com", "lnkd.in", "licdn.com", "linkedin.cn"],
+    "labels": ["linkedin", "licdn"]
+  },
+  "netflix": {
+    "aliases": ["netflix"],
+    "legitDomains": ["netflix.com", "nflxso.net", "nflximg.net", "netflix.co.uk"],
+    "labels": ["netflix", "nflximg", "nflxso"]
+  },
+  "dhl": {
+    "aliases": ["dhl", "dhl express"],
+    "legitDomains": ["dhl.com", "dhl.de", "dhl.co.in", "dhlparcel.co.uk", "dhl-express.com", "dhl.com.au"],
+    "labels": ["dhl", "dhlparcel"]
+  },
+  "fedex": {
+    "aliases": ["fedex", "federal express"],
+    "legitDomains": ["fedex.com", "fedex.co.uk", "fedex.ca", "fedex.com.au"],
+    "labels": ["fedex"]
+  },
+  "ups": {
+    "aliases": ["ups", "united parcel service"],
+    "legitDomains": ["ups.com", "ups.co.uk", "ups.com.hk"],
+    "labels": ["ups"]
+  },
+  "dropbox": {
+    "aliases": ["dropbox"],
+    "legitDomains": ["dropbox.com", "dropboxusercontent.com", "getdropbox.com"],
+    "labels": ["dropbox"]
+  },
+  "docusign": {
+    "aliases": ["docusign", "docu sign"],
+    "legitDomains": ["docusign.com", "docusign.net", "docusign.co.uk"],
+    "labels": ["docusign"]
+  },
+  "adobe": {
+    "aliases": ["adobe", "creative cloud", "acrobat"],
+    "legitDomains": ["adobe.com", "adobe.io", "acrobat.com", "adobelogin.com"],
+    "labels": ["adobe", "adobelogin"]
+  },
+  "zoom": {
+    "aliases": ["zoom", "zoom video"],
+    "legitDomains": ["zoom.us", "zoom.com", "zoomus.cn"],
+    "labels": ["zoom", "zoomus"]
+  },
+  "sbi": {
+    "aliases": ["state bank of india", "sbi", "onlinesbi", "yono"],
+    "legitDomains": ["sbi.co.in", "onlinesbi.com", "onlinesbi.sbi", "sbiyono.in", "sbicard.com", "sbi.co.in"],
+    "labels": ["sbi", "onlinesbi", "sbiyono", "sbicard"]
+  },
+  "hdfc": {
+    "aliases": ["hdfc bank", "hdfc"],
+    "legitDomains": ["hdfcbank.com", "hdfc.com", "hdfcbank.co.in", "hdfcsec.com"],
+    "labels": ["hdfc", "hdfcbank"]
+  },
+  "icici": {
+    "aliases": ["icici bank", "icici"],
+    "legitDomains": ["icicibank.com", "icici.com", "icicibank.co.in", "icicidirect.com"],
+    "labels": ["icici", "icicibank"]
+  },
+  "axis": {
+    "aliases": ["axis bank", "axis"],
+    "legitDomains": ["axisbank.com", "axisbank.co.in", "axis.com"],
+    "labels": ["axisbank", "axis"]
+  },
+  "indiapost": {
+    "aliases": ["india post", "indiapost", "post office", "speed post"],
+    "legitDomains": ["indiapost.gov.in", "indiapost.com", "canadapost-postescanada.ca"],
+    "labels": ["indiapost"]
+  },
+  "incometax": {
+    "aliases": ["income tax department", "incometax", "itr", "pan card", "tds"],
+    "legitDomains": ["incometax.gov.in", "incometaxindia.gov.in", "tin-nsdl.com", "protean-tinpan.com", "nsdl.co.in"],
+    "labels": ["incometax"]
+  },
+  "uidai": {
+    "aliases": ["uidai", "aadhaar", "aadhar"],
+    "legitDomains": ["uidai.gov.in", "aadhaar.uidai.gov.in", "myaadhaar.uidai.gov.in"],
+    "labels": ["uidai", "aadhaar"]
+  },
+  "paytm": {
+    "aliases": ["paytm", "paytm mall", "paytm payments bank"],
+    "legitDomains": ["paytm.com", "paytmbank.com", "paytm.in", "paytmmall.com"],
+    "labels": ["paytm", "paytmbank"]
+  },
+  "phonepe": {
+    "aliases": ["phonepe", "phone pe"],
+    "legitDomains": ["phonepe.com", "phonepe.co.in", "phonepay.in"],
+    "labels": ["phonepe"]
+  },
+  "irs": {
+    "aliases": ["irs", "internal revenue service"],
+    "legitDomains": ["irs.gov", "id.me"],
+    "labels": ["irs"]
+  }
+}

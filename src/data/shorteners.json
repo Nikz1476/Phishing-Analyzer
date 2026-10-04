@@ -1,0 +1,11 @@
+{
+  "_comment": "Known URL shorteners. We NEVER resolve them (that would need a network request and break the privacy rule); we only flag that the visible destination is hidden.",
+  "domains": [
+    "bit.ly", "tinyurl.com", "t.co", "ow.ly", "is.gd", "buff.ly", "rebrand.ly",
+    "cutt.ly", "tiny.cc", "rb.gy", "shorturl.at", "goo.gl", "bit.do", "mcaf.ee",
+    "bl.ink", "short.io", "lnkd.in", "surl.li", "t.ly", "clck.ru", "v.gd",
+    "shorte.st", "adf.ly", "bc.vc", "u.to", "qps.ru", "soo.gd", "x.co",
+    "7.ly", "1drv.ms", "aka.ms", "amzn.to", "youtu.be", "ift.tt", "dlvr.it",
+    "po.st", "snip.ly", "smarturl.it", "urlz.fr", "lnis.io"
+  ]
+}

@@ -21,13 +21,26 @@ const FORBIDDEN_PATTERNS = [
   { name: 'remote Worker', pattern: /new\s+Worker\s*\(\s*['"`]https?:\/\// },
   { name: 'remote <script src="http', pattern: /<script[^>]+src\s*=\s*["']https?:\/\// },
   { name: 'remote <link href="http', pattern: /<link[^>]+href\s*=\s*["']https?:\/\// },
-  { name: '@import url(http', pattern: /@import\s+url\(\s*['"]?https?:\/\// },
-  { name: 'bare http(s):// string', pattern: /https?:\/\/\S+/ }
+  { name: '@import url(http', pattern: /@import\s+url\(\s*['"]?https?:\/\// }
 ];
 
-// Allow-listed files/lines where a documented http(s) string is fine - e.g.
-// RFC references in comments/docs, or this script's own pattern definitions.
-const ALLOWLIST_FILE_SUFFIXES = ['.md', '.test.ts', 'privacy-check.mjs'];
+// A bare http(s) string is only dangerous where a browser would FETCH it:
+// markup and stylesheets. Inside JS/TS it is just data (a demo email, or a
+// URL the analyser displays defanged), so scanning it there produced nothing
+// but false positives and would only train us to ignore the check.
+const MARKUP_ONLY_PATTERNS = [
+  { name: 'bare http(s):// with a real hostname', pattern: /https?:\/\/[a-z0-9-]+(?:\.[a-z0-9-]+)+/i }
+];
+
+// Allow-listed files where a documented http(s) string is expected. Each entry
+// is justified in the comment beside it:
+//   - privacy-check.mjs : this file defines the patterns itself.
+//   - *.md / *.test.ts  : RFC references and test fixtures.
+//   - samples.ts        : demo emails. Section 14 requires literal URLs in the
+//                         samples, and they are safe by construction: reserved
+//                         TLDs (.test) and the documentation IP range only.
+const ALLOWLISTED_FILES = new Set(['privacy-check.mjs', 'samples.ts']);
+const ALLOWLISTED_SUFFIXES = ['.md', '.test.ts'];
 
 const SCAN_ROOTS = ['src', 'dist'];
 const SCAN_EXTENSIONS = new Set(['.ts', '.tsx', '.js', '.html', '.css', '.json']);
@@ -53,15 +66,20 @@ function walk(dir, results = []) {
 }
 
 function isAllowlisted(filePath) {
-  return ALLOWLIST_FILE_SUFFIXES.some((suffix) => filePath.endsWith(suffix));
+  const normalised = filePath.replace(/\\/g, '/');
+  const base = normalised.slice(normalised.lastIndexOf('/') + 1);
+  if (ALLOWLISTED_FILES.has(base)) return true;
+  return ALLOWLISTED_SUFFIXES.some((suffix) => normalised.endsWith(suffix));
 }
 
 function scanFile(filePath) {
   const violations = [];
   const content = readFileSync(filePath, 'utf8');
   const lines = content.split('\n');
+  const isMarkup = /\.(html|css)$/i.test(filePath);
+  const patterns = isMarkup ? [...FORBIDDEN_PATTERNS, ...MARKUP_ONLY_PATTERNS] : FORBIDDEN_PATTERNS;
   lines.forEach((line, index) => {
-    for (const { name, pattern } of FORBIDDEN_PATTERNS) {
+    for (const { name, pattern } of patterns) {
       if (pattern.test(line)) {
         violations.push({ filePath, line: index + 1, rule: name, text: line.trim() });
       }

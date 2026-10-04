@@ -1,0 +1,118 @@
+{
+  "version": "1.0.0",
+  "rules": [
+    {
+      "id": "FIN-GIFTCARD",
+      "category": "financial",
+      "weight": 28,
+      "title": "Gift-card or voucher payment request",
+      "why": "Gift cards are irreversible and untraceable, which is why they are the favourite currency of CEO-fraud and sextortion scams. No real business requests payment in gift cards.",
+      "advice": "Stop. Never buy gift cards on instruction from an email. Call the requester on a number you already know.",
+      "mitre": ["T1657"],
+      "confidence": "high",
+      "patterns": [
+        { "type": "anyOf", "values": ["gift card", "gift cards", "giftcard", "giftcards", "itunes card", "itunes gift", "google play card", "google play gift", "amazon gift card", "amazon card", "steam card", "steam wallet", "apple gift card", "apple card code"] },
+        { "type": "anyOf", "values": ["buy gift cards", "purchase gift cards", "get gift cards", "buy gift card", "purchase gift card", "buy two gift cards", "pick up gift cards", "shop for gift cards"] },
+        { "type": "anyOf", "values": ["scratch the back", "scratch off the back", "send the codes", "send me the codes", "share the codes", "send the card numbers", "send codes", "provide the codes", "photograph the card", "send photos of the card", "card pin and serial"] },
+        { "type": "anyOf", "values": ["voucher code", "redemption code", "gift voucher", "prepaid card", "recharge voucher", "e-gift", "egift", "digital gift card"] },
+        { "type": "anyOf", "values": ["keep the receipt", "keep this confidential until", "i will reimburse", "you will be reimbursed", "reimburse you later", "reimbursement later"] }
+      ],
+      "negations": ["never buy gift cards", "we never ask for gift cards", "scammers ask for gift cards"],
+      "examples": ["I need you to buy two $100 Amazon gift cards urgently and send me the codes."],
+      "falsePositives": ["Marketing mail advertising gift cards; the rule keys on a request to buy and send codes."]
+    },
+    {
+      "id": "FIN-BANK-CHANGE",
+      "category": "financial",
+      "weight": 25,
+      "title": "Change of bank account or payment details",
+      "why": "Swapping the payee account on an invoice is the core of payment-diversion fraud. Once the money moves to the attacker's account it is usually unrecoverable.",
+      "advice": "Verify any change of bank details by phoning a known contact at the supplier. Never accept new account details from email alone.",
+      "mitre": ["T1657"],
+      "confidence": "high",
+      "patterns": [
+        { "type": "anyOf", "values": ["new bank details", "updated bank details", "change of bank details", "change of account", "change of bank account", "new account details", "updated account details", "revised bank details", "amended bank details"] },
+        { "type": "anyOf", "values": ["new bank account", "new account number", "new iban", "updated iban", "new sort code", "new ifsc", "updated ifsc", "new account and ifsc", "beneficiary account changed", "new beneficiary"] },
+        { "type": "anyOf", "values": ["please update our bank", "update our payment details", "update our banking", "update the payment details", "update our account details", "use the new account", "kindly use our new", "please note our new account"] },
+        { "type": "anyOf", "values": ["remit to", "remittance to the new", "make payment to the new account", "transfer to the new account", "pay into the following account", "wire to the following", "neft to the new", "rtgs to the new"] },
+        { "type": "anyOf", "values": ["new payee", "add new payee", "add a beneficiary", "onboarding form", "vendor onboarding", "bank account verification letter", "cancelled cheque"] }
+      ],
+      "negations": [],
+      "examples": ["Please note our new bank details below and update your records before the next payment."],
+      "falsePositives": ["Legitimate suppliers do change banks, but always verify by phone; that is exactly why this stays a strong signal."]
+    },
+    {
+      "id": "FIN-PAYMENT-PRESSURE",
+      "category": "financial",
+      "weight": 15,
+      "title": "Urgent payment or transfer demand",
+      "why": "Pressure to send money quickly via wire, UPI or crypto is designed to beat any verification process.",
+      "advice": "Verify the request independently before sending any money, especially if it is urgent.",
+      "mitre": ["T1657"],
+      "confidence": "medium",
+      "patterns": [
+        { "type": "anyOf", "values": ["wire transfer", "bank transfer", "make the transfer", "send the payment", "process the payment", "release payment", "urgent payment", "same-day payment", "today's payment", "immediate payment", "payment is due today"] },
+        { "type": "anyOf", "values": ["pay via upi", "up the upi", "scan the upi qr", "scan this qr to pay", "send to this upi", "pay to this upi", "gpay to", "phonepe to", "paytm to", "transfer via upi"] },
+        { "type": "anyOf", "values": ["send bitcoin", "send btc", "send crypto", "transfer usdt", "pay in usdt", "send eth", "wallet address", "crypto payment", "token payment"] },
+        { "type": "anyOf", "values": ["outstanding balance", "clear the balance", "settle the payment", "avoid late fee", "pay immediately to avoid", "immediate settlement", "urgent settlement"] }
+      ],
+      "negations": [],
+      "examples": ["Please process the urgent payment today to avoid disruption."],
+      "falsePositives": ["Genuine invoices and payment reminders; consider sender authentication and whether YOU expected the bill."]
+    },
+    {
+      "id": "FIN-CRYPTO-ADDR",
+      "category": "financial",
+      "weight": 15,
+      "title": "Cryptocurrency wallet address in a payment context",
+      "why": "A wallet address plus payment wording is a strong sign of ransomware, sextortion or investment fraud. The address itself is only meaningful with that context, which is why the rule demands a nearby payment term.",
+      "advice": "Never send crypto to an address from an email. Crypto payments cannot be reversed.",
+      "mitre": ["T1657"],
+      "confidence": "medium",
+      "patterns": [
+        { "type": "regex", "value": "\\b(?:bc1[a-z0-9]{25,62}|[13][a-km-zA-HJ-NP-Z1-9]{25,34}|0x[a-fA-F0-9]{40})\\b", "nearby": ["pay", "payment", "send", "transfer", "deposit", "address", "wallet", "bitcoin", "btc", "eth", "usdt", "crypto", "ransom"], "distance": 20 }
+      ],
+      "negations": ["never send crypto", "do not send crypto"],
+      "examples": ["Send 0.5 BTC to bc1qexampleaddress to restore your files."],
+      "falsePositives": ["A developer sharing an address in a technical discussion; weak alone, hence weight 15."]
+    },
+    {
+      "id": "FIN-INVOICE-UNEXPECTED",
+      "category": "financial",
+      "weight": 10,
+      "title": "Unexpected invoice, purchase order or overdue notice",
+      "why": "Fake invoices and remittance notices are used both to trigger payment and to deliver malware as an 'invoice' attachment. They work because they look routine.",
+      "advice": "Check the invoice against orders you actually placed. Never open an invoice attachment you did not expect.",
+      "mitre": ["T1566"],
+      "confidence": "medium",
+      "requiresAny": ["has-url", "has-attachment"],
+      "patterns": [
+        { "type": "anyOf", "values": ["please find attached invoice", "attached invoice", "invoice attached", "invoice for your", "your invoice", "outstanding invoice", "overdue invoice", "unpaid invoice", "invoice number", "proforma invoice", "tax invoice"] },
+        { "type": "anyOf", "values": ["purchase order", "order confirmation", "remittance advice", "payment remittance", "statement of account", "account statement", "e-statement", "consignment note", "delivery note", "packing slip"] },
+        { "type": "anyOf", "values": ["overdue", "past due", "amount outstanding", "payment overdue", "outstanding dues", "pending dues", "unpaid balance"] },
+        { "type": "anyOf", "values": ["view invoice", "download invoice", "open the attached", "see attached", "review the attached", "refer to the attached", "copy of the invoice"] }
+      ],
+      "negations": [],
+      "examples": ["Please find attached invoice INV-88213 overdue for payment."],
+      "falsePositives": ["Regular vendor invoices are legitimate; the unexpected ones are the risk, which the tool cannot know - it flags the pattern."]
+    },
+    {
+      "id": "FIN-CALLBACK",
+      "category": "financial",
+      "weight": 20,
+      "title": "Callback request involving a phone number and a refund or charge",
+      "why": "Callback phishing (TOAD) hides the fraud behind a phone number instead of a link, because phone calls bypass email link scanners. The victim is talked into installing remote-access software.",
+      "advice": "Do not call numbers from an email. Look up the company's number yourself and call that. Never install remote-access tools on request.",
+      "mitre": ["T1566", "T1598.004"],
+      "confidence": "medium",
+      "patterns": [
+        { "type": "proximity", "a": ["call", "phone", "contact us at", "helpline", "dial", "toll free", "toll-free"], "b": ["cancel", "dispute", "refund", "subscription", "charge", "renewal", "unauthorised charge", "unauthorized charge", "transaction", "billing", "invoice", "renewal fee"], "distance": 12 },
+        { "type": "anyOf", "values": ["call to cancel", "call to dispute", "call to confirm", "call to reverse", "call to claim refund", "call this number to", "please call us on", "call our helpline", "contact our support on", "reach us at"] },
+        { "type": "regex", "value": "(?:\\+?\\d{1,3}[\\s.-]?)?(?:\\(?\\d{3,5}\\)?[\\s.-]?)\\d{3,4}[\\s.-]?\\d{3,4}" }
+      ],
+      "negations": ["do not call any number", "never call numbers in emails"],
+      "examples": ["Your subscription renewed for $499. To cancel, call our helpline on +1-800-555-0199."],
+      "falsePositives": ["Support signatures legitimately include phone numbers; weight rises only with a refund/charge/cancel context."]
+    }
+  ]
+}

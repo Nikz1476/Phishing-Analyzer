@@ -1,0 +1,41 @@
+{
+  "_comment": "Scoring constants. This file is the single source of truth for caps and thresholds so the UI, tests and docs all agree. Individual rule weights live with the rules themselves (rules/*.json for phrase rules, in code for structural rules).",
+  "version": "0.3.0-phase3",
+  "calibrationHash": "uncalibrated-heuristics-v1",
+  "caps": {
+    "language": 35,
+    "credential": 40,
+    "financial": 40,
+    "url": 45,
+    "attachment": 40,
+    "header": 45,
+    "impersonation": 30,
+    "technique": 40,
+    "evasion": 20
+  },
+  "perUrlCap": 35,
+  "repeatFactor": 0.25,
+  "corroborationCap": 25,
+  "mitigationFloor": -13,
+  "severityThresholds": {
+    "info": 0,
+    "low": 1,
+    "medium": 8,
+    "high": 15,
+    "critical": 25
+  },
+  "classificationThresholds": {
+    "suspicious": 25,
+    "highRisk": 55
+  },
+  "combos": {
+    "CMB-CRED-LINK": 10,
+    "CMB-BRAND-INFRA": 10,
+    "CMB-PAYMENT-PRESSURE": 12,
+    "CMB-EXEC-LURE": 10
+  },
+  "mitigations": {
+    "MIT-AUTH-ALIGNED": -8,
+    "MIT-LINKS-SAME-DOMAIN": -5
+  }
+}

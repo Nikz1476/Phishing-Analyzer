@@ -1,0 +1,31 @@
+{
+  "_comment": "Homoglyph / confusable folding table. Keys are non-ASCII code points (or common multi-char digraphs) and values are their ASCII skeleton. Used in TWO distinct places, on purpose: (1) normalise() folds word-internal homoglyphs so phrase rules still match an attacker's 'pаypal' spelled with Cyrillic а; (2) the URL analyser folds a decoded punycode label to its ASCII skeleton to spot skeleton-matches against brand labels. Multi-char entries (rn->m, vv->w) support the classic 'rn' vs 'm' registrable-label trick.",
+  "singleChar": {
+    "а": "a", "А": "a", "ɑ": "a", "à": "a", "á": "a", "â": "a", "ã": "a", "ä": "a", "å": "a", "ā": "a", "ă": "a", "ą": "a", "ǎ": "a", "ạ": "a", "α": "a", "Α": "a",
+    "е": "e", "Е": "e", "ё": "e", "è": "e", "é": "e", "ê": "e", "ë": "e", "ē": "e", "ĕ": "e", "ė": "e", "ę": "e", "ě": "e", "ε": "e", "Ε": "e",
+    "о": "o", "О": "o", "ο": "o", "Ο": "o", "ò": "o", "ó": "o", "ô": "o", "õ": "o", "ö": "o", "ō": "o", "ŏ": "o", "ő": "o", "ø": "o", "ǒ": "o", "ǫ": "o", "0": "o",
+    "р": "p", "Р": "p", "ρ": "p", "Ρ": "p",
+    "с": "c", "С": "c", "ç": "c", "ć": "c", "ĉ": "c", "ċ": "c", "č": "c", "ς": "c",
+    "х": "x", "Х": "x", "χ": "x", "Χ": "x", "×": "x",
+    "у": "y", "У": "y", "ý": "y", "ÿ": "y", "ŷ": "y", "γ": "y", "ϒ": "y",
+    "і": "i", "І": "i", "ı": "i", "ì": "i", "í": "i", "î": "i", "ï": "i", "ī": "i", "ĭ": "i", "į": "i", "ǐ": "i", "ι": "i", "Ι": "i", "1": "l", "l": "l", "!" : "i",
+    "ѕ": "s", "Ѕ": "s", "ś": "s", "ŝ": "s", "ş": "s", "š": "s", "ș": "s", "5": "s",
+    "ν": "v", "ѵ": "v", "ⅴ": "v",
+    "м": "m", "М": "m", "ṃ": "m",
+    "т": "t", "Т": "t", "τ": "t", "Τ": "t", "ţ": "t", "ť": "t", "ț": "t",
+    "п": "n", "П": "n", "ñ": "n", "ń": "n", "ņ": "n", "ň": "n", "ν": "n", "π": "n",
+    "к": "k", "К": "k", "κ": "k", "Κ": "k", "ķ": "k",
+    "в": "b", "В": "b", "β": "b", "Β": "b", "6": "b", "8": "b",
+    "г": "r", "Г": "r", "ŕ": "r", "ř": "r", "ρ": "r",
+    "д": "d", "Д": "d", "ď": "d", "đ": "d",
+    "ф": "f", "Ф": "f", "φ": "f",
+    "з": "3", "З": "3", "ƶ": "z", "ż": "z", "ź": "z", "ž": "z",
+    "ч": "4", "Ч": "4",
+    "л": "l", "Л": "l",
+    "г": "r", "ц": "u", "Ц": "u", "и": "u", "И": "u", "υ": "u", "ս": "u", "ս": "u",
+    "ц": "u", "шь": "w", "ш": "w", "Ш": "w", "ω": "w", "ω": "w"
+  },
+  "multiChar": {
+    "rn": "m", "vv": "w", "cl": "d", "ii": "n", "l1": "h", "0o": "oo"
+  }
+}
